@@ -23,8 +23,7 @@ export const birthdayContent = {
     ctaLabel: "Turn the Page",
   },
 
-  // ── Photo Gallery ──────────────────────────────────────────
-  // Replace src with your actual image paths inside /public/photos/
+  // Add photos to /public/photos and update paths here
   gallery: [
     {
       id: 1,
@@ -197,7 +196,7 @@ export const birthdayContent = {
   gift: {
     heading: "A Little Gift For You 🎁",
     revealMessage:
-      "Happy Birthday, My Love! 🎉\n\nThank you for being you. For every laugh, every memory, every beautiful ordinary moment. Today is yours — and I hope it's as wonderful as you are.",
+      "Happy Birthday, My Love! 🎉\n\nThank you for being you. For every laugh, every memory, every beautiful ordinary moment. Today is yours and I hope it's as wonderful as you are.",
     buttonLabel: "Open Your Gift",
   },
 

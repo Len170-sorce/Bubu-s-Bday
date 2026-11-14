@@ -38,16 +38,13 @@ export default function DuduBear() {
   const handleBearClick = () => {
     setHasInteracted(true);
 
-    // Select random message avoiding immediate repeats
     const pool = messages.filter((m) => m !== currentMessage);
     const nextMessage = pool[Math.floor(Math.random() * pool.length)] || messages[0];
     setCurrentMessage(nextMessage);
 
-    // Trigger bounce animation
     setIsBouncing(true);
-    setTimeout(() => setIsBouncing(false), 500);
+    setTimeout(() => setIsBouncing(false), 450);
 
-    // Show speech cloud & reset auto-hide timer (3.8 seconds)
     setIsVisible(true);
     if (hideTimerRef.current) {
       clearTimeout(hideTimerRef.current);
@@ -56,27 +53,24 @@ export default function DuduBear() {
       setIsVisible(false);
     }, 3800);
 
-    // Burst a few floating mini-hearts
     const burstEmojis = ["💗", "🌸", "✨", "💕", "❤️"];
     const newParticles: HeartParticle[] = Array.from({ length: 3 }, (_, i) => ({
       id: Date.now() + i,
-      x: (Math.random() - 0.5) * 40,
+      x: (Math.random() - 0.5) * 36,
       y: -10 - Math.random() * 20,
       emoji: burstEmojis[Math.floor(Math.random() * burstEmojis.length)],
     }));
     setParticles((prev) => [...prev.slice(-6), ...newParticles]);
   };
 
-  // Clean up floating particles
   useEffect(() => {
     if (particles.length === 0) return;
     const timer = setTimeout(() => {
       setParticles([]);
-    }, 1800);
+    }, 1600);
     return () => clearTimeout(timer);
   }, [particles]);
 
-  // Clean up timer on unmount
   useEffect(() => {
     return () => {
       if (hideTimerRef.current) clearTimeout(hideTimerRef.current);
@@ -88,31 +82,29 @@ export default function DuduBear() {
       className="fixed bottom-14 sm:bottom-16 md:bottom-20 right-3 sm:right-6 md:right-8 z-40 select-none flex flex-col items-end"
       aria-label="Interactive Dudu Bear companion"
     >
-      {/* Speech Cloud / Bubble */}
       <AnimatePresence>
         {isVisible && (
           <motion.div
             key={currentMessage}
             className="relative mb-2 sm:mb-3 pointer-events-none max-w-[210px] sm:max-w-[260px] md:max-w-[290px]"
-            initial={{ opacity: 0, scale: 0.65, y: 15 }}
+            initial={{ opacity: 0, scale: 0.7, y: 12 }}
             animate={{ opacity: 1, scale: 1, y: 0 }}
-            exit={{ opacity: 0, scale: 0.75, y: -12 }}
+            exit={{ opacity: 0, scale: 0.8, y: -10 }}
             transition={{
               type: "spring",
-              damping: 18,
-              stiffness: 240,
+              damping: 20,
+              stiffness: 260,
+              mass: 0.6,
             }}
           >
-            {/* Scrapbook Cloud Container */}
             <div
               className="relative rounded-[24px] rounded-br-[6px] px-4 py-3 sm:px-5 sm:py-3.5 shadow-xl border border-[#F7DDE5]"
               style={{
                 background: "linear-gradient(135deg, #FFFDF8 0%, #FFF8F0 60%, #F7DDE5 100%)",
                 boxShadow:
-                  "0 12px 32px rgba(168, 95, 120, 0.22), 0 2px 8px rgba(0, 0, 0, 0.04)",
+                  "0 12px 32px rgba(168, 95, 120, 0.2), 0 2px 8px rgba(0, 0, 0, 0.04)",
               }}
             >
-              {/* Cloud scallop bubbles decoration */}
               <div
                 className="absolute -top-1.5 left-4 w-4 h-4 rounded-full bg-[#FFFDF8] opacity-80 pointer-events-none"
                 style={{ borderTop: "1px solid #F7DDE5" }}
@@ -122,7 +114,6 @@ export default function DuduBear() {
                 style={{ borderTop: "1px solid #F7DDE5" }}
               />
 
-              {/* Message text */}
               <p
                 className="font-script text-[#A85F78] text-base sm:text-lg md:text-xl text-center leading-snug font-medium"
                 style={{ fontFamily: "Caveat, cursive" }}
@@ -130,7 +121,6 @@ export default function DuduBear() {
                 {currentMessage}
               </p>
 
-              {/* Speech bubble tail pointing towards Dudu Bear */}
               <div
                 className="absolute -bottom-2 right-5 w-4 h-4 rotate-45"
                 style={{
@@ -144,29 +134,27 @@ export default function DuduBear() {
         )}
       </AnimatePresence>
 
-      {/* Bursting mini-particles */}
       <AnimatePresence>
         {particles.map((p) => (
           <motion.span
             key={p.id}
-            className="absolute pointer-events-none text-base sm:text-lg z-50"
+            className="absolute pointer-events-none text-base sm:text-lg z-50 select-none"
             style={{ right: 35 + p.x, bottom: 65 }}
-            initial={{ opacity: 1, y: 0, scale: 0.6 }}
+            initial={{ opacity: 1, y: 0, scale: 0.5 }}
             animate={{
               opacity: 0,
               y: p.y - 45,
-              scale: [0.6, 1.2, 0.9],
-              rotate: (Math.random() - 0.5) * 40,
+              scale: [0.5, 1.2, 0.9],
+              rotate: (Math.random() - 0.5) * 36,
             }}
             exit={{ opacity: 0 }}
-            transition={{ duration: 1.4, ease: "easeOut" }}
+            transition={{ duration: 1.3, ease: "easeOut" }}
           >
             {p.emoji}
           </motion.span>
         ))}
       </AnimatePresence>
 
-      {/* Initial gentle hint before first tap */}
       {!hasInteracted && !isVisible && (
         <motion.div
           className="mb-1 mr-2 px-2.5 py-1 rounded-full text-xs font-script text-[#A85F78] border border-[#E9B7C6] shadow-sm pointer-events-none"
@@ -182,7 +170,6 @@ export default function DuduBear() {
         </motion.div>
       )}
 
-      {/* Dudu Bear Button */}
       <motion.button
         onClick={handleBearClick}
         onKeyDown={(e) => {
@@ -191,36 +178,34 @@ export default function DuduBear() {
             handleBearClick();
           }
         }}
-        className="relative group cursor-pointer focus:outline-none focus-visible:ring-2 focus-visible:ring-[#A85F78] rounded-full p-1 transition-transform"
+        className="relative group cursor-pointer focus:outline-none focus-visible:ring-2 focus-visible:ring-[#A85F78] rounded-full p-1"
         aria-label="Click Dudu Bear for a sweet message"
-        whileHover={{ scale: 1.08 }}
-        whileTap={{ scale: 0.92 }}
+        whileHover={{ scale: 1.07 }}
+        whileTap={{ scale: 0.94 }}
         animate={
           isBouncing
             ? {
-                y: [0, -16, 2, -6, 0],
-                scale: [1, 1.2, 0.94, 1.05, 1],
-                rotate: [0, -6, 6, -3, 0],
+                y: [0, -14, 2, -5, 0],
+                scale: [1, 1.18, 0.95, 1.04, 1],
+                rotate: [0, -5, 5, -2, 0],
               }
             : {
                 y: [-3, 3, -3],
-                rotate: [-1.5, 1.5, -1.5],
+                rotate: [-1.2, 1.2, -1.2],
               }
         }
         transition={
           isBouncing
-            ? { duration: 0.55, ease: "easeInOut" }
+            ? { duration: 0.48, ease: "easeInOut" }
             : { duration: 4.5, repeat: Infinity, ease: "easeInOut" }
         }
       >
-        {/* Soft radial glow behind Dudu Bear */}
         <div
-          className="absolute inset-0 rounded-full blur-md opacity-40 group-hover:opacity-70 transition-opacity"
+          className="absolute inset-0 rounded-full blur-md opacity-35 group-hover:opacity-65 transition-opacity"
           style={{ background: "radial-gradient(circle, #F7DDE5 20%, transparent 70%)" }}
         />
 
-        {/* Dudu Bear Image */}
-        <div className="relative w-20 h-20 sm:w-24 sm:h-24 md:w-28 md:h-28 drop-shadow-lg">
+        <div className="relative w-20 h-20 sm:w-24 sm:h-24 md:w-28 md:h-28 drop-shadow-md">
           <Image
             src="/dudubear.png"
             alt="Dudu Bear"

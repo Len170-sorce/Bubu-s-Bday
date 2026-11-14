@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
+import { AnimatePresence, motion } from "framer-motion";
 import { birthdayContent } from "@/data/birthday-content";
 import OpeningScreen from "@/components/OpeningScreen";
 import HeroSection from "@/components/HeroSection";
@@ -20,7 +21,6 @@ export default function Home() {
   const [opened, setOpened] = useState(false);
   const mainRef = useRef<HTMLDivElement>(null);
 
-  // Scroll to top on first reveal
   useEffect(() => {
     if (opened && mainRef.current) {
       mainRef.current.scrollIntoView({ behavior: "smooth" });
@@ -31,17 +31,18 @@ export default function Home() {
     <>
       <CustomCursor />
 
-      {/* Opening envelope overlay */}
-      {!opened && (
-        <OpeningScreen onOpen={() => setOpened(true)} />
-      )}
+      <AnimatePresence mode="wait">
+        {!opened && (
+          <OpeningScreen onOpen={() => setOpened(true)} />
+        )}
+      </AnimatePresence>
 
-      {/* Main website revealed after opening */}
-      <div
+      <motion.div
         ref={mainRef}
-        className={`transition-opacity duration-1000 ${
-          opened ? "opacity-100" : "opacity-0 pointer-events-none"
-        }`}
+        initial={{ opacity: 0 }}
+        animate={{ opacity: opened ? 1 : 0 }}
+        transition={{ duration: 0.9, ease: [0.22, 1, 0.36, 1] }}
+        className={opened ? "pointer-events-auto" : "pointer-events-none"}
       >
         <FloatingDecorations />
         <ScrollProgress />
@@ -57,7 +58,7 @@ export default function Home() {
           <GiftSection />
           <FinalSection onReplay={() => setOpened(false)} />
         </main>
-      </div>
+      </motion.div>
     </>
   );
 }

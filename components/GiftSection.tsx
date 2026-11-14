@@ -1,14 +1,13 @@
 "use client";
 
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { birthdayContent } from "@/data/birthday-content";
 
 interface Particle {
   id: number;
   x: number;
-  y: number;
-  color: string;
+  drift: number;
   rotation: number;
   scale: number;
   shape: string;
@@ -16,44 +15,42 @@ interface Particle {
 
 function Confetti({ active }: { active: boolean }) {
   const [particles, setParticles] = useState<Particle[]>([]);
-  const colors = ["#F7DDE5", "#DDA0B3", "#A85F78", "#F5D5C8", "#E9B7C6", "#FFFDF8"];
   const shapes = ["🌸", "💗", "✨", "🌷", "⭐", "💮"];
 
   useEffect(() => {
     if (!active) return;
     setParticles(
-      Array.from({ length: 40 }, (_, i) => ({
+      Array.from({ length: 36 }, (_, i) => ({
         id: i,
-        x: Math.random() * 100,
-        y: -10,
-        color: colors[Math.floor(Math.random() * colors.length)],
+        x: 10 + Math.random() * 80,
+        drift: (Math.random() - 0.5) * 160,
         rotation: Math.random() * 360,
-        scale: 0.6 + Math.random() * 0.8,
+        scale: 0.7 + Math.random() * 0.7,
         shape: shapes[Math.floor(Math.random() * shapes.length)],
       }))
     );
-    const timer = setTimeout(() => setParticles([]), 4000);
+    const timer = setTimeout(() => setParticles([]), 4200);
     return () => clearTimeout(timer);
   }, [active]);
 
   return (
-    <div className="fixed inset-0 pointer-events-none z-40 overflow-hidden">
+    <div className="fixed inset-0 pointer-events-none z-40 overflow-hidden" aria-hidden="true">
       {particles.map((p) => (
         <motion.div
           key={p.id}
-          className="absolute text-2xl"
-          style={{ left: `${p.x}%`, top: `${p.y}%` }}
-          initial={{ y: -40, opacity: 1, rotate: p.rotation, scale: p.scale }}
+          className="absolute text-2xl select-none"
+          style={{ left: `${p.x}%`, top: "35%" }}
+          initial={{ y: 0, opacity: 1, scale: p.scale, rotate: p.rotation }}
           animate={{
-            y: "110vh",
+            y: ["0vh", "-18vh", "65vh"],
+            x: [0, p.drift * 0.5, p.drift],
             opacity: [1, 1, 0],
-            rotate: p.rotation + 360 + Math.random() * 360,
-            x: (Math.random() - 0.5) * 200,
+            rotate: p.rotation + 480,
           }}
           transition={{
-            duration: 2.5 + Math.random() * 1.5,
-            delay: Math.random() * 0.8,
-            ease: "easeIn",
+            duration: 3 + Math.random() * 1.2,
+            delay: Math.random() * 0.35,
+            ease: [0.16, 1, 0.3, 1],
           }}
         >
           {p.shape}
@@ -69,39 +66,37 @@ export default function GiftSection() {
 
   const handleOpen = () => {
     setShowConfetti(true);
-    setTimeout(() => setOpened(true), 400);
+    setTimeout(() => setOpened(true), 350);
   };
 
   return (
     <section
       id="gift"
-      className="relative py-24 px-4 sm:px-8 overflow-hidden"
+      className="relative py-20 sm:py-24 px-4 sm:px-8 overflow-hidden"
       style={{ background: "#FFFDF8" }}
     >
       <div className="torn-top w-full" />
 
       <Confetti active={showConfetti} />
 
-      {/* Background */}
-      <div className="absolute inset-0 pointer-events-none">
+      <div className="absolute inset-0 pointer-events-none" aria-hidden="true">
         <div
           className="absolute inset-0 opacity-20"
           style={{
-            background:
-              "radial-gradient(circle at 50% 50%, #F7DDE5 0%, transparent 60%)",
+            background: "radial-gradient(circle at 50% 50%, #F7DDE5 0%, transparent 60%)",
           }}
         />
       </div>
 
-      {/* Section header */}
       <motion.div
-        className="text-center mb-14 relative z-10"
-        initial={{ opacity: 0, y: 30 }}
+        className="text-center mb-12 sm:mb-14 relative z-10"
+        initial={{ opacity: 0, y: 24 }}
         whileInView={{ opacity: 1, y: 0 }}
-        viewport={{ once: true }}
+        viewport={{ once: true, margin: "-60px" }}
+        transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
       >
         <h2
-          className="text-3xl sm:text-4xl text-[#A85F78]"
+          className="text-2xl sm:text-3xl md:text-4xl text-[#A85F78]"
           style={{ fontFamily: "Playfair Display, serif" }}
         >
           {birthdayContent.gift.heading}
@@ -116,19 +111,26 @@ export default function GiftSection() {
       <div className="relative z-10 max-w-sm mx-auto flex flex-col items-center gap-8">
         <AnimatePresence mode="wait">
           {!opened ? (
-            /* Gift box */
             <motion.div
               key="box"
-              className="cursor-pointer text-center"
-              initial={{ opacity: 0, scale: 0.85 }}
+              className="cursor-pointer text-center select-none"
+              initial={{ opacity: 0, scale: 0.9 }}
               whileInView={{ opacity: 1, scale: 1 }}
               viewport={{ once: true }}
-              transition={{ type: "spring", duration: 0.8 }}
+              transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
               onClick={handleOpen}
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
+              role="button"
+              tabIndex={0}
+              onKeyDown={(e) => {
+                if (e.key === "Enter" || e.key === " ") {
+                  e.preventDefault();
+                  handleOpen();
+                }
+              }}
+              aria-label="Open your surprise gift"
             >
-              {/* SVG Gift box */}
               <svg
                 width="200"
                 height="200"
@@ -137,29 +139,21 @@ export default function GiftSection() {
                 xmlns="http://www.w3.org/2000/svg"
                 className="mx-auto drop-shadow-xl"
               >
-                {/* Box body */}
                 <rect x="20" y="90" width="160" height="90" rx="4" fill="#F7DDE5" />
                 <rect x="20" y="90" width="160" height="90" rx="4" stroke="#DDA0B3" strokeWidth="2" />
 
-                {/* Box lid */}
                 <rect x="12" y="68" width="176" height="30" rx="4" fill="#DDA0B3" />
                 <rect x="12" y="68" width="176" height="30" rx="4" stroke="#A85F78" strokeWidth="1.5" />
 
-                {/* Ribbon vertical */}
                 <rect x="90" y="68" width="20" height="112" fill="#A85F78" opacity="0.6" />
-
-                {/* Ribbon horizontal */}
                 <rect x="12" y="78" width="176" height="10" fill="#A85F78" opacity="0.6" />
 
-                {/* Bow */}
                 <ellipse cx="80" cy="68" rx="28" ry="14" fill="#A85F78" transform="rotate(-20 80 68)" />
                 <ellipse cx="120" cy="68" rx="28" ry="14" fill="#A85F78" transform="rotate(20 120 68)" />
                 <circle cx="100" cy="68" r="12" fill="#DDA0B3" />
 
-                {/* Star on ribbon */}
                 <text x="100" y="73" textAnchor="middle" fontSize="12" fill="#FFFDF8">★</text>
 
-                {/* Dots pattern on box */}
                 {[40, 70, 100, 130, 160].map((x, i) =>
                   [110, 130, 150].map((y, j) => (
                     <circle key={`${i}-${j}`} cx={x} cy={y} r="2.5" fill="#E9B7C6" opacity="0.5" />
@@ -171,36 +165,34 @@ export default function GiftSection() {
                 className="font-script text-xl text-[#DDA0B3] mt-4"
                 style={{ fontFamily: "Caveat, cursive" }}
                 animate={{ opacity: [0.7, 1, 0.7] }}
-                transition={{ duration: 2, repeat: Infinity }}
+                transition={{ duration: 2.2, repeat: Infinity, ease: "easeInOut" }}
               >
                 Tap to open your gift! 🎁
               </motion.p>
             </motion.div>
           ) : (
-            /* Revealed message */
             <motion.div
               key="message"
-              className="text-center relative"
-              initial={{ opacity: 0, scale: 0.8, y: 20 }}
+              className="text-center relative w-full"
+              initial={{ opacity: 0, scale: 0.88, y: 15 }}
               animate={{ opacity: 1, scale: 1, y: 0 }}
-              transition={{ type: "spring", damping: 15, stiffness: 100 }}
+              transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
             >
-              {/* Floating emojis ring */}
               {["🌸", "💗", "✨", "🌷", "⭐", "💮"].map((icon, i) => (
                 <motion.span
                   key={i}
-                  className="absolute text-2xl"
+                  className="absolute text-2xl select-none pointer-events-none"
                   style={{
                     left: `${50 + 48 * Math.cos((i * Math.PI * 2) / 6)}%`,
                     top: `${50 + 48 * Math.sin((i * Math.PI * 2) / 6)}%`,
                     transform: "translate(-50%, -50%)",
                   }}
                   initial={{ scale: 0, opacity: 0 }}
-                  animate={{ scale: 1, opacity: 1, y: [-5, 5, -5] }}
+                  animate={{ scale: 1, opacity: 1, y: [-4, 4, -4] }}
                   transition={{
-                    delay: i * 0.1,
-                    duration: 3,
-                    y: { repeat: Infinity, duration: 2 + i * 0.3 },
+                    delay: i * 0.08,
+                    duration: 2.8,
+                    y: { repeat: Infinity, duration: 2 + i * 0.3, ease: "easeInOut" },
                   }}
                 >
                   {icon}
@@ -208,17 +200,17 @@ export default function GiftSection() {
               ))}
 
               <div
-                className="relative glass-card rounded-3xl p-6 sm:p-10 mx-auto max-w-[340px] sm:max-w-md w-full"
+                className="relative glass-card rounded-3xl p-6 sm:p-10 mx-auto max-w-[340px] sm:max-w-md w-full shadow-xl"
               >
                 <motion.div
-                  className="text-5xl mb-4"
-                  animate={{ scale: [1, 1.15, 1] }}
-                  transition={{ duration: 1.5, repeat: Infinity }}
+                  className="text-5xl mb-4 select-none"
+                  animate={{ scale: [1, 1.12, 1] }}
+                  transition={{ duration: 1.8, repeat: Infinity, ease: "easeInOut" }}
                 >
                   🎉
                 </motion.div>
                 <h3
-                  className="text-2xl sm:text-3xl text-[#A85F78] mb-4 leading-tight"
+                  className="text-2xl sm:text-3xl text-[#A85F78] mb-4 leading-tight font-medium"
                   style={{ fontFamily: "Playfair Display, serif" }}
                 >
                   Happy Birthday,
@@ -228,8 +220,8 @@ export default function GiftSection() {
                 {birthdayContent.gift.revealMessage.split("\n").map((line, i) => (
                   <p
                     key={i}
-                    className="text-[#8D756D] leading-relaxed mb-2"
-                    style={{ fontFamily: "Cormorant Garamond, serif", fontSize: "1.05rem" }}
+                    className="text-[#8D756D] leading-relaxed mb-2 text-base"
+                    style={{ fontFamily: "Cormorant Garamond, serif", fontSize: "1.08rem" }}
                   >
                     {line}
                   </p>

@@ -10,58 +10,55 @@ interface FinalSectionProps {
 export default function FinalSection({ onReplay }: FinalSectionProps) {
   const handleReplay = () => {
     window.scrollTo({ top: 0, behavior: "smooth" });
-    setTimeout(onReplay, 600);
+    setTimeout(onReplay, 650);
   };
 
   return (
     <section
       id="final"
-      className="relative min-h-screen flex flex-col items-center justify-center py-24 px-4 sm:px-8 overflow-hidden"
+      className="relative min-h-screen flex flex-col items-center justify-center py-20 sm:py-24 px-4 sm:px-8 overflow-hidden"
       style={{ background: "linear-gradient(180deg, #FFF8F0 0%, #F7DDE5 50%, #FFF8F0 100%)" }}
     >
-      {/* Background decorations */}
-      <div className="absolute inset-0 pointer-events-none overflow-hidden">
+      <div className="absolute inset-0 pointer-events-none overflow-hidden" aria-hidden="true">
         {["🌸", "🌷", "✨", "💮", "💗", "⭐"].map((icon, i) => (
           <motion.span
             key={i}
-            className="absolute text-3xl opacity-15"
+            className="absolute text-3xl opacity-15 select-none"
             style={{
               left: `${[5, 88, 15, 78, 50, 30][i]}%`,
               top: `${[10, 20, 75, 65, 5, 90][i]}%`,
             }}
-            animate={{ y: [-12, 12, -12], rotate: [-6, 6, -6] }}
-            transition={{ duration: 4 + i * 0.8, repeat: Infinity, ease: "easeInOut" }}
+            animate={{ y: [-10, 10, -10], rotate: [-4, 4, -4] }}
+            transition={{ duration: 4.5 + i * 0.7, repeat: Infinity, ease: "easeInOut" }}
           >
             {icon}
           </motion.span>
         ))}
       </div>
 
-      <div className="relative z-10 max-w-2xl mx-auto text-center flex flex-col items-center gap-8">
-        {/* Scrapbook label */}
+      <div className="relative z-10 max-w-2xl mx-auto text-center flex flex-col items-center gap-7 sm:gap-8">
         <motion.div
-          className="px-5 py-1.5 rounded-full text-xs tracking-widest uppercase font-sans"
+          className="px-5 py-1.5 rounded-full text-xs tracking-widest uppercase font-sans shadow-sm"
           style={{ background: "#F7DDE5", color: "#A85F78" }}
-          initial={{ opacity: 0, scale: 0.8 }}
+          initial={{ opacity: 0, scale: 0.85 }}
           whileInView={{ opacity: 1, scale: 1 }}
           viewport={{ once: true }}
-          transition={{ type: "spring" }}
+          transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
         >
           The Last Page 📖
         </motion.div>
 
-        {/* Final photo placeholder */}
         <motion.div
           className="polaroid"
           style={{ transform: "rotate(1.5deg)", maxWidth: 220 }}
-          initial={{ opacity: 0, y: 30, rotate: 6 }}
+          initial={{ opacity: 0, y: 24, rotate: 4 }}
           whileInView={{ opacity: 1, y: 0, rotate: 1.5 }}
           viewport={{ once: true }}
-          transition={{ duration: 0.9, type: "spring" }}
+          transition={{ duration: 0.75, ease: [0.22, 1, 0.36, 1] }}
           whileHover={{ scale: 1.05, rotate: 0 }}
         >
           <div
-            className="absolute -top-3 left-1/2 -translate-x-1/2 w-20 h-5 rounded-sm opacity-70"
+            className="absolute -top-3 left-1/2 -translate-x-1/2 w-20 h-5 rounded-sm opacity-70 pointer-events-none"
             style={{
               background: "repeating-linear-gradient(90deg, #DDA0B3 0px, #DDA0B3 10px, #A85F78 10px, #A85F78 20px)",
             }}
@@ -73,7 +70,7 @@ export default function FinalSection({ onReplay }: FinalSectionProps) {
             <div className="text-center p-4">
               <div className="text-4xl mb-2">📷</div>
               <p
-                className="font-script text-xs text-[#A85F78]"
+                className="font-script text-xs sm:text-sm text-[#A85F78]"
                 style={{ fontFamily: "Caveat, cursive" }}
               >
                 Your photo here
@@ -83,78 +80,72 @@ export default function FinalSection({ onReplay }: FinalSectionProps) {
           <p className="polaroid-caption">{birthdayContent.finalPage.photoCaption}</p>
         </motion.div>
 
-        {/* Closing heading */}
         <motion.h2
-          className="text-3xl sm:text-4xl text-[#A85F78] leading-tight"
+          className="text-2xl sm:text-3xl md:text-4xl text-[#A85F78] leading-tight font-medium"
           style={{ fontFamily: "Playfair Display, serif" }}
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          transition={{ delay: 0.2 }}
+          transition={{ delay: 0.15, duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
         >
           Until More Memories…
         </motion.h2>
 
-        {/* Divider */}
         <div className="flex items-center gap-3">
           <div className="h-px w-12 bg-[#DDA0B3] opacity-50" />
           <span className="text-[#DDA0B3]">🌸</span>
           <div className="h-px w-12 bg-[#DDA0B3] opacity-50" />
         </div>
 
-        {/* Closing message */}
         <motion.p
-          className="text-[#8D756D] leading-8 max-w-md"
-          style={{ fontFamily: "Cormorant Garamond, serif", fontSize: "1.1rem" }}
-          initial={{ opacity: 0, y: 20 }}
+          className="text-[#8D756D] leading-8 max-w-md text-base"
+          style={{ fontFamily: "Cormorant Garamond, serif", fontSize: "1.12rem" }}
+          initial={{ opacity: 0, y: 16 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          transition={{ delay: 0.3 }}
+          transition={{ delay: 0.25, duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
         >
           {birthdayContent.finalPage.closingMessage}
         </motion.p>
 
-        {/* Handwritten closing note */}
         <motion.p
-          className="font-script text-2xl text-[#DDA0B3]"
+          className="font-script text-2xl sm:text-3xl text-[#DDA0B3]"
           style={{ fontFamily: "Caveat, cursive" }}
           initial={{ opacity: 0 }}
           whileInView={{ opacity: 1 }}
           viewport={{ once: true }}
-          transition={{ delay: 0.5 }}
+          transition={{ delay: 0.4, duration: 0.8 }}
         >
           {birthdayContent.finalPage.handwrittenNote}
         </motion.p>
 
-        {/* Decorative flowers */}
         <motion.div
-          className="text-4xl"
-          animate={{ rotate: [-5, 5, -5] }}
-          transition={{ duration: 4, repeat: Infinity }}
+          className="text-3xl sm:text-4xl select-none"
+          animate={{ rotate: [-4, 4, -4] }}
+          transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
         >
           🌸🌷🌸
         </motion.div>
 
-        {/* Replay button */}
         <motion.button
           onClick={handleReplay}
-          className="relative overflow-hidden px-10 py-4 rounded-full text-[#FFFDF8] font-sans text-sm tracking-widest uppercase mt-4"
+          className="relative overflow-hidden px-9 py-3.5 rounded-full text-[#FFFDF8] font-sans text-xs sm:text-sm tracking-widest uppercase mt-2 shadow-md"
           style={{
             background: "linear-gradient(135deg, #DDA0B3 0%, #A85F78 100%)",
-            boxShadow: "0 8px 32px rgba(168,95,120,0.3)",
+            boxShadow: "0 8px 30px rgba(168,95,120,0.3)",
           }}
-          initial={{ opacity: 0, y: 20 }}
+          initial={{ opacity: 0, y: 16 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          transition={{ delay: 0.7 }}
-          whileHover={{ scale: 1.05, boxShadow: "0 12px 40px rgba(168,95,120,0.45)" }}
+          transition={{ delay: 0.5, duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
+          whileHover={{ scale: 1.04, boxShadow: "0 12px 38px rgba(168,95,120,0.42)" }}
           whileTap={{ scale: 0.97 }}
         >
           <span
-            className="absolute inset-0 opacity-30"
+            className="absolute inset-0 opacity-25"
             style={{
               background:
-                "linear-gradient(90deg, transparent 0%, rgba(255,255,255,0.6) 50%, transparent 100%)",
+                "linear-gradient(90deg, transparent 0%, rgba(255,255,255,0.7) 50%, transparent 100%)",
               backgroundSize: "200% 100%",
               animation: "shimmer 2.5s linear infinite",
             }}
@@ -162,14 +153,13 @@ export default function FinalSection({ onReplay }: FinalSectionProps) {
           <span className="relative">{birthdayContent.finalPage.replayLabel}</span>
         </motion.button>
 
-        {/* Birthday date */}
         <motion.p
-          className="font-script text-sm text-[#DDA0B3] opacity-60"
+          className="font-script text-sm text-[#DDA0B3] opacity-65"
           style={{ fontFamily: "Caveat, cursive" }}
           initial={{ opacity: 0 }}
-          whileInView={{ opacity: 0.6 }}
+          whileInView={{ opacity: 0.65 }}
           viewport={{ once: true }}
-          transition={{ delay: 0.9 }}
+          transition={{ delay: 0.65 }}
         >
           {birthdayContent.birthdayDate} 🎂
         </motion.p>

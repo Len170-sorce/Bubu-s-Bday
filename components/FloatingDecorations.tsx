@@ -1,65 +1,45 @@
 "use client";
 
-import { useEffect, useState, useRef } from "react";
-import { motion, AnimatePresence } from "framer-motion";
+import { useEffect, useState } from "react";
 
-// Floating decoration particles
 const DECORATIONS = [
-  { icon: "🌸", size: "text-xl", floatClass: "float-a" },
-  { icon: "🌷", size: "text-lg", floatClass: "float-b" },
-  { icon: "✨", size: "text-sm", floatClass: "sparkle-anim" },
-  { icon: "💗", size: "text-base", floatClass: "float-c" },
-  { icon: "🌺", size: "text-xl", floatClass: "float-b" },
-  { icon: "⭐", size: "text-sm", floatClass: "sparkle-anim" },
-  { icon: "💮", size: "text-lg", floatClass: "float-a" },
-  { icon: "🌸", size: "text-base", floatClass: "float-c" },
-  { icon: "✨", size: "text-xs", floatClass: "sparkle-anim" },
-  { icon: "💗", size: "text-sm", floatClass: "float-b" },
-  { icon: "🌷", size: "text-xl", floatClass: "float-a" },
-  { icon: "⭐", size: "text-base", floatClass: "float-c" },
+  { icon: "🌸", size: "text-xl", floatClass: "float-a", left: 8, top: 18 },
+  { icon: "🌷", size: "text-lg", floatClass: "float-b", left: 88, top: 22 },
+  { icon: "✨", size: "text-sm", floatClass: "sparkle-anim", left: 24, top: 38 },
+  { icon: "💗", size: "text-base", floatClass: "float-c", left: 74, top: 48 },
+  { icon: "🌺", size: "text-xl", floatClass: "float-b", left: 12, top: 62 },
+  { icon: "⭐", size: "text-sm", floatClass: "sparkle-anim", left: 84, top: 72 },
+  { icon: "💮", size: "text-lg", floatClass: "float-a", left: 48, top: 82 },
+  { icon: "🌸", size: "text-base", floatClass: "float-c", left: 92, top: 12 },
+  { icon: "✨", size: "text-xs", floatClass: "sparkle-anim", left: 6, top: 88 },
+  { icon: "💗", size: "text-sm", floatClass: "float-b", left: 65, top: 28 },
+  { icon: "🌷", size: "text-xl", floatClass: "float-a", left: 32, top: 76 },
+  { icon: "⭐", size: "text-base", floatClass: "float-c", left: 54, top: 92 },
 ];
 
-interface FloatItem {
-  id: number;
-  icon: string;
-  size: string;
-  floatClass: string;
-  left: number;
-  top: number;
-  delay: number;
-  opacity: number;
-}
-
 export default function FloatingDecorations() {
-  const [items, setItems] = useState<FloatItem[]>([]);
+  const [mounted, setMounted] = useState(false);
 
   useEffect(() => {
-    setItems(
-      DECORATIONS.map((d, i) => ({
-        id: i,
-        ...d,
-        left: 2 + Math.random() * 96,
-        top: 2 + Math.random() * 96,
-        delay: Math.random() * -8,
-        opacity: 0.08 + Math.random() * 0.14,
-      }))
-    );
+    setMounted(true);
   }, []);
+
+  if (!mounted) return null;
 
   return (
     <div
       className="fixed inset-0 pointer-events-none z-0 overflow-hidden"
       aria-hidden="true"
     >
-      {items.map((item) => (
+      {DECORATIONS.map((item, index) => (
         <div
-          key={item.id}
+          key={index}
           className={`absolute select-none ${item.size} ${item.floatClass}`}
           style={{
             left: `${item.left}%`,
             top: `${item.top}%`,
-            opacity: item.opacity,
-            animationDelay: `${item.delay}s`,
+            opacity: 0.16,
+            animationDelay: `${index * -0.6}s`,
           }}
         >
           {item.icon}

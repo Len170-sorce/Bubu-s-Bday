@@ -12,23 +12,23 @@ function MobileTimelineEntry({
   index: number;
 }) {
   const ref = useRef<HTMLDivElement>(null);
-  const inView = useInView(ref, { once: true, margin: "-80px" });
+  const inView = useInView(ref, { once: true, margin: "-60px" });
 
   return (
     <div ref={ref} className="relative pl-8 mb-10">
       <motion.div
-        className="absolute left-0 top-6 w-8 h-8 rounded-full border-2 border-[#DDA0B3] bg-[#FFF8F0] flex items-center justify-center"
-        initial={{ scale: 0 }}
-        animate={inView ? { scale: 1 } : {}}
-        transition={{ type: "spring", delay: 0.1 }}
+        className="absolute left-0 top-6 w-8 h-8 rounded-full border-2 border-[#DDA0B3] bg-[#FFF8F0] flex items-center justify-center shadow-sm"
+        initial={{ scale: 0, opacity: 0 }}
+        animate={inView ? { scale: 1, opacity: 1 } : {}}
+        transition={{ duration: 0.45, ease: [0.22, 1, 0.36, 1] }}
       >
         <div className="w-2.5 h-2.5 rounded-full bg-[#DDA0B3]" />
       </motion.div>
       <motion.div
         className="glass-card rounded-2xl p-5"
-        initial={{ opacity: 0, x: -20 }}
+        initial={{ opacity: 0, x: -24 }}
         animate={inView ? { opacity: 1, x: 0 } : {}}
-        transition={{ duration: 0.6 }}
+        transition={{ duration: 0.65, ease: [0.22, 1, 0.36, 1] }}
       >
         <span className="text-xl">{entry.emoji}</span>
         <span
@@ -38,14 +38,14 @@ function MobileTimelineEntry({
           {entry.date}
         </span>
         <h3
-          className="text-lg text-[#A85F78] mt-1 mb-2"
+          className="text-lg text-[#A85F78] mt-1 mb-2 font-medium"
           style={{ fontFamily: "Playfair Display, serif" }}
         >
           {entry.title}
         </h3>
         <p
           className="text-[#8D756D] text-sm leading-relaxed"
-          style={{ fontFamily: "Cormorant Garamond, serif", fontSize: "1rem" }}
+          style={{ fontFamily: "Cormorant Garamond, serif", fontSize: "1.05rem" }}
         >
           {entry.description}
         </p>
@@ -62,7 +62,7 @@ function DesktopTimelineEntry({
   index: number;
 }) {
   const ref = useRef<HTMLDivElement>(null);
-  const inView = useInView(ref, { once: true, margin: "-80px" });
+  const inView = useInView(ref, { once: true, margin: "-60px" });
   const isLeft = index % 2 === 0;
 
   return (
@@ -70,23 +70,21 @@ function DesktopTimelineEntry({
       ref={ref}
       className={`relative flex gap-8 items-start ${isLeft ? "flex-row" : "flex-row-reverse"} mb-14`}
     >
-      {/* Content card */}
       <motion.div
         className="flex-1 glass-card rounded-2xl p-6 relative"
-        initial={{ opacity: 0, x: isLeft ? -40 : 40 }}
+        initial={{ opacity: 0, x: isLeft ? -36 : 36 }}
         animate={inView ? { opacity: 1, x: 0 } : {}}
-        transition={{ duration: 0.7, ease: "easeOut", delay: 0.1 }}
+        transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
       >
-        {/* Washi tape */}
         <div
-          className="absolute -top-2.5 left-6 h-5 w-14 rounded-sm opacity-70"
+          className="absolute -top-2.5 left-6 h-5 w-14 rounded-sm opacity-70 pointer-events-none"
           style={{
             background:
               "repeating-linear-gradient(90deg, #F7DDE5 0px, #F7DDE5 8px, #E9B7C6 8px, #E9B7C6 16px)",
             rotate: "-1deg",
           }}
         />
-        <div className="flex items-start gap-3 flex-wrap">
+        <div className="flex items-start gap-3.5 flex-wrap">
           <span className="text-2xl">{entry.emoji}</span>
           <div className="flex-1 min-w-0">
             <span
@@ -96,14 +94,14 @@ function DesktopTimelineEntry({
               {entry.date}
             </span>
             <h3
-              className="text-xl text-[#A85F78] mb-2 leading-snug"
+              className="text-xl text-[#A85F78] mb-2 leading-snug font-medium"
               style={{ fontFamily: "Playfair Display, serif" }}
             >
               {entry.title}
             </h3>
             <p
-              className="text-[#8D756D] leading-relaxed"
-              style={{ fontFamily: "Cormorant Garamond, serif", fontSize: "1.05rem" }}
+              className="text-[#8D756D] leading-relaxed text-base"
+              style={{ fontFamily: "Cormorant Garamond, serif", fontSize: "1.08rem" }}
             >
               {entry.description}
             </p>
@@ -111,17 +109,15 @@ function DesktopTimelineEntry({
         </div>
       </motion.div>
 
-      {/* Center dot */}
       <motion.div
-        className="relative z-10 flex-shrink-0 flex items-center justify-center w-10 h-10 rounded-full border-2 border-[#DDA0B3] bg-[#FFF8F0] mt-6"
+        className="relative z-10 flex-shrink-0 flex items-center justify-center w-10 h-10 rounded-full border-2 border-[#DDA0B3] bg-[#FFF8F0] mt-6 shadow-sm"
         initial={{ scale: 0, opacity: 0 }}
         animate={inView ? { scale: 1, opacity: 1 } : {}}
-        transition={{ duration: 0.5, delay: 0.2, type: "spring" }}
+        transition={{ duration: 0.45, ease: [0.22, 1, 0.36, 1] }}
       >
         <div className="w-3 h-3 rounded-full bg-[#DDA0B3]" />
       </motion.div>
 
-      {/* Spacer */}
       <div className="flex-1" />
     </div>
   );
@@ -131,17 +127,16 @@ export default function TimelineSection() {
   return (
     <section
       id="timeline"
-      className="relative py-24 px-4 sm:px-8 overflow-hidden"
+      className="relative py-20 sm:py-24 px-4 sm:px-8 overflow-hidden"
       style={{ background: "linear-gradient(180deg, #FFF8F0 0%, #F7DDE5 50%, #FFF8F0 100%)" }}
     >
-      {/* Background decorations */}
-      <div className="absolute inset-0 pointer-events-none overflow-hidden">
+      <div className="absolute inset-0 pointer-events-none overflow-hidden" aria-hidden="true">
         {(["🌸", "🌷", "✨"] as const).map((icon, i) => (
           <motion.span
             key={i}
-            className="absolute text-3xl opacity-10"
+            className="absolute text-3xl opacity-10 select-none"
             style={{ left: `${[5, 90, 50][i]}%`, top: `${[10, 30, 70][i]}%` }}
-            animate={{ y: [-12, 12, -12] }}
+            animate={{ y: [-10, 10, -10] }}
             transition={{ duration: 5 + i * 1.5, repeat: Infinity, ease: "easeInOut" }}
           >
             {icon}
@@ -149,22 +144,21 @@ export default function TimelineSection() {
         ))}
       </div>
 
-      {/* Section header */}
       <motion.div
-        className="text-center mb-16 relative z-10"
-        initial={{ opacity: 0, y: 30 }}
+        className="text-center mb-14 sm:mb-16 relative z-10"
+        initial={{ opacity: 0, y: 24 }}
         whileInView={{ opacity: 1, y: 0 }}
-        viewport={{ once: true }}
-        transition={{ duration: 0.8 }}
+        viewport={{ once: true, margin: "-60px" }}
+        transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
       >
         <span
-          className="font-script text-5xl text-[#DDA0B3] block mb-3"
+          className="font-script text-4xl sm:text-5xl text-[#DDA0B3] block mb-2 sm:mb-3"
           style={{ fontFamily: "Caveat, cursive" }}
         >
           Little Moments
         </span>
         <h2
-          className="text-3xl sm:text-4xl text-[#A85F78]"
+          className="text-2xl sm:text-3xl md:text-4xl text-[#A85F78]"
           style={{ fontFamily: "Playfair Display, serif" }}
         >
           That Became Special
@@ -176,9 +170,7 @@ export default function TimelineSection() {
         </div>
       </motion.div>
 
-      {/* Timeline */}
       <div className="relative max-w-2xl mx-auto z-10">
-        {/* Vertical line */}
         <div
           className="absolute left-4 sm:left-1/2 sm:-translate-x-1/2 top-0 bottom-0 w-px opacity-30"
           style={{
@@ -186,14 +178,12 @@ export default function TimelineSection() {
           }}
         />
 
-        {/* Mobile layout */}
         <div className="sm:hidden">
           {birthdayContent.timeline.map((entry, i) => (
             <MobileTimelineEntry key={entry.id} entry={entry} index={i} />
           ))}
         </div>
 
-        {/* Desktop layout */}
         <div className="hidden sm:block">
           {birthdayContent.timeline.map((entry, index) => (
             <DesktopTimelineEntry key={entry.id} entry={entry} index={index} />

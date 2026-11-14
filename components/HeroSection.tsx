@@ -7,12 +7,14 @@ import { birthdayContent } from "@/data/birthday-content";
 export default function HeroSection() {
   const ref = useRef<HTMLDivElement>(null);
   const { scrollYProgress } = useScroll({ target: ref, offset: ["start start", "end start"] });
-  const y = useTransform(scrollYProgress, [0, 1], ["0%", "30%"]);
-  const opacity = useTransform(scrollYProgress, [0, 0.6], [1, 0]);
+  const y = useTransform(scrollYProgress, [0, 1], ["0%", "24%"]);
+  const opacity = useTransform(scrollYProgress, [0, 0.7], [1, 0]);
 
   const scrollToNext = () => {
     const gallery = document.getElementById("gallery");
-    if (gallery) gallery.scrollIntoView({ behavior: "smooth" });
+    if (gallery) {
+      gallery.scrollIntoView({ behavior: "smooth" });
+    }
   };
 
   return (
@@ -22,8 +24,7 @@ export default function HeroSection() {
       className="relative min-h-screen flex flex-col items-center justify-center overflow-hidden px-6 py-20"
       style={{ background: "linear-gradient(180deg, #FFF8F0 0%, #F7DDE5 60%, #FFF8F0 100%)" }}
     >
-      {/* Parallax background blobs */}
-      <motion.div style={{ y }} className="absolute inset-0 pointer-events-none">
+      <motion.div style={{ y }} className="absolute inset-0 pointer-events-none" aria-hidden="true">
         <div
           className="absolute top-[-10%] left-[-5%] w-[55vw] h-[55vw] rounded-full opacity-30"
           style={{ background: "radial-gradient(circle, #F7DDE5 0%, transparent 70%)" }}
@@ -34,7 +35,6 @@ export default function HeroSection() {
         />
       </motion.div>
 
-      {/* Floating decorative elements */}
       {["🌸", "🌷", "✨", "🌺", "💗", "⭐"].map((icon, i) => (
         <motion.span
           key={i}
@@ -44,8 +44,8 @@ export default function HeroSection() {
             top: `${[20, 15, 65, 70, 42, 38][i]}%`,
             opacity: 0.35,
           }}
-          animate={{ y: [-10, 10, -10], rotate: [-6, 6, -6] }}
-          transition={{ duration: 4 + i * 0.7, repeat: Infinity, ease: "easeInOut" }}
+          animate={{ y: [-8, 8, -8], rotate: [-4, 4, -4] }}
+          transition={{ duration: 4.5 + i * 0.6, repeat: Infinity, ease: "easeInOut" }}
         >
           {icon}
         </motion.span>
@@ -55,68 +55,59 @@ export default function HeroSection() {
         style={{ opacity }}
         className="relative z-10 flex flex-col items-center text-center gap-6 max-w-2xl"
       >
-        {/* Scrapbook label sticker */}
         <motion.div
-          className="px-5 py-1.5 rounded-full text-xs tracking-[0.2em] uppercase font-sans"
+          className="px-5 py-1.5 rounded-full text-xs tracking-[0.2em] uppercase font-sans shadow-sm"
           style={{ background: "#F7DDE5", color: "#A85F78" }}
-          initial={{ opacity: 0, scale: 0.8 }}
+          initial={{ opacity: 0, scale: 0.85 }}
           animate={{ opacity: 1, scale: 1 }}
-          transition={{ delay: 0.2, duration: 0.6, type: "spring" }}
+          transition={{ delay: 0.15, duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
         >
           A little world made just for you ✨
         </motion.div>
 
-        {/* Main heading */}
         <motion.h1
           className="text-4xl xs:text-5xl sm:text-6xl md:text-7xl leading-tight"
           style={{ fontFamily: "Playfair Display, serif", color: "#A85F78" }}
-          initial={{ opacity: 0, y: 30 }}
+          initial={{ opacity: 0, y: 24 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.4, duration: 0.9 }}
+          transition={{ delay: 0.3, duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
         >
           {birthdayContent.hero.heading}
           <br />
-          <span
-            className="italic"
-            style={{ color: "#DDA0B3" }}
-          >
+          <span className="italic" style={{ color: "#DDA0B3" }}>
             {birthdayContent.recipientName}
           </span>
         </motion.h1>
 
-        {/* Decorative divider */}
         <motion.div
           className="flex items-center gap-3"
           initial={{ opacity: 0, scaleX: 0 }}
           animate={{ opacity: 1, scaleX: 1 }}
-          transition={{ delay: 0.7, duration: 0.7 }}
+          transition={{ delay: 0.5, duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
         >
           <div className="h-px w-16 bg-[#DDA0B3] opacity-60" />
           <span className="text-[#DDA0B3] text-xl">🌸</span>
           <div className="h-px w-16 bg-[#DDA0B3] opacity-60" />
         </motion.div>
 
-        {/* Subheading */}
         <motion.p
           className="text-lg sm:text-xl font-light text-[#8D756D]"
           style={{ fontFamily: "Cormorant Garamond, serif" }}
-          initial={{ opacity: 0, y: 20 }}
+          initial={{ opacity: 0, y: 16 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.8, duration: 0.8 }}
+          transition={{ delay: 0.65, duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
         >
           {birthdayContent.hero.subheading}
         </motion.p>
 
-        {/* Photo placeholder card */}
         <motion.div
           className="polaroid mt-4"
           style={{ transform: "rotate(-2deg)", maxWidth: 220 }}
-          initial={{ opacity: 0, y: 30, rotate: -8 }}
+          initial={{ opacity: 0, y: 24, rotate: -6 }}
           animate={{ opacity: 1, y: 0, rotate: -2 }}
-          transition={{ delay: 1, duration: 0.8, type: "spring" }}
+          transition={{ delay: 0.8, duration: 0.75, ease: [0.22, 1, 0.36, 1] }}
           whileHover={{ scale: 1.05, rotate: 0 }}
         >
-          {/* Washi tape decoration */}
           <div
             className="absolute -top-3 left-1/2 -translate-x-1/2 w-16 h-5 rounded-sm opacity-80"
             style={{
@@ -137,44 +128,41 @@ export default function HeroSection() {
           <p className="polaroid-caption">My favorite person 💗</p>
         </motion.div>
 
-        {/* Handwritten note */}
         <motion.p
-          className="font-script text-xl text-[#DDA0B3]"
+          className="font-script text-xl sm:text-2xl text-[#DDA0B3]"
           style={{ fontFamily: "Caveat, cursive" }}
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
-          transition={{ delay: 1.2, duration: 0.8 }}
+          transition={{ delay: 1, duration: 0.8 }}
         >
           {birthdayContent.hero.handwrittenNote}
         </motion.p>
 
-        {/* CTA button */}
         <motion.button
           onClick={scrollToNext}
-          className="mt-2 group flex flex-col items-center gap-2 text-sm tracking-widest uppercase font-sans text-[#A85F78]"
-          initial={{ opacity: 0, y: 20 }}
+          className="mt-2 group flex flex-col items-center gap-1.5 text-xs sm:text-sm tracking-widest uppercase font-sans text-[#A85F78]"
+          initial={{ opacity: 0, y: 16 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 1.4, duration: 0.6 }}
-          whileHover={{ y: 4 }}
+          transition={{ delay: 1.15, duration: 0.6 }}
+          whileHover={{ y: 3 }}
         >
           <span>{birthdayContent.hero.ctaLabel}</span>
           <motion.div
-            animate={{ y: [0, 6, 0] }}
-            transition={{ duration: 1.4, repeat: Infinity, ease: "easeInOut" }}
-            className="text-[#DDA0B3] text-xl"
+            animate={{ y: [0, 5, 0] }}
+            transition={{ duration: 1.6, repeat: Infinity, ease: "easeInOut" }}
+            className="text-[#DDA0B3] text-lg"
           >
             ↓
           </motion.div>
         </motion.button>
       </motion.div>
 
-      {/* Birthday date badge */}
       <motion.div
         className="absolute bottom-4 sm:bottom-5 right-4 sm:right-6 font-script text-sm text-[#DDA0B3] opacity-70"
         style={{ fontFamily: "Caveat, cursive", rotate: "3deg" }}
         initial={{ opacity: 0 }}
         animate={{ opacity: 0.7 }}
-        transition={{ delay: 1.6 }}
+        transition={{ delay: 1.3 }}
       >
         {birthdayContent.birthdayDate} 🎂
       </motion.div>
