@@ -170,7 +170,7 @@ export default function HeroSection() {
 
       {/* Birthday date badge */}
       <motion.div
-        className="absolute bottom-8 right-6 font-script text-sm text-[#DDA0B3] opacity-70"
+        className="absolute bottom-4 sm:bottom-5 right-4 sm:right-6 font-script text-sm text-[#DDA0B3] opacity-70"
         style={{ fontFamily: "Caveat, cursive", rotate: "3deg" }}
         initial={{ opacity: 0 }}
         animate={{ opacity: 0.7 }}

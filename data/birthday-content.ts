@@ -77,7 +77,7 @@ export const birthdayContent = {
       date: "The Beginning",
       title: "The Day We Met",
       description:
-        "Some stories start quietly, without fanfare — just two people crossing paths in the most ordinary way. That day felt different somehow. It still does.",
+        "Some stories start quietly, without fanfare just two people crossing paths in the most ordinary way. That day felt different somehow. It still does.",
       photo: null,
       emoji: "🌸",
     },
@@ -218,6 +218,25 @@ export const birthdayContent = {
     title: "Our Song",
     artist: "♪",
   },
+
+  // ── Dudu Bear Messages ─────────────────────────────────────
+  duduMessages: [
+    "I love you! ❤️",
+    "Happy Birthday, my love! 🎂",
+    "Hello, pretty girl! 🌸",
+    "You're so special! ✨",
+    "Sending you hugs! 🤗",
+    "You make me smile! 😊",
+    "I miss you! 🥺",
+    "You're my favorite person! 💖",
+    "You are so loved! 💕",
+    "Mwah! 💗",
+    "Have a beautiful day! 🌷",
+    "Just a little reminder that I love you! 💌",
+    "You're the sweetest, Bubu! 🐻",
+    "Thinking of you always! 💭",
+    "Forever grateful for you! 🌟",
+  ],
 };
 
 export type BirthdayContent = typeof birthdayContent;

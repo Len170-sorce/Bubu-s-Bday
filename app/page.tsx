@@ -14,6 +14,7 @@ import FloatingDecorations from "@/components/FloatingDecorations";
 import MusicPlayer from "@/components/MusicPlayer";
 import ScrollProgress from "@/components/ScrollProgress";
 import CustomCursor from "@/components/CustomCursor";
+import DuduBear from "@/components/DuduBear";
 
 export default function Home() {
   const [opened, setOpened] = useState(false);
@@ -45,6 +46,7 @@ export default function Home() {
         <FloatingDecorations />
         <ScrollProgress />
         <MusicPlayer src={birthdayContent.music.src} title={birthdayContent.music.title} />
+        <DuduBear />
 
         <main className="relative">
           <HeroSection />
