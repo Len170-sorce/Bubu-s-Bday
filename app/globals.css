@@ -1,0 +1,266 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ─── Google Fonts variables ──────────────────────────── */
+:root {
+  --font-serif: "Playfair Display", Georgia, serif;
+  --font-cormorant: "Cormorant Garamond", Georgia, serif;
+  --font-sans: "DM Sans", system-ui, sans-serif;
+  --font-script: "Caveat", cursive;
+
+  /* Color palette */
+  --cream: #fff8f0;
+  --ivory: #fffdf8;
+  --blush: #f7dde5;
+  --dusty-rose: #dda0b3;
+  --rose-pink: #e9b7c6;
+  --deep-rose: #a85f78;
+  --peach: #f5d5c8;
+  --muted-brown: #8d756d;
+}
+
+/* ─── Base resets ─────────────────────────────────────── */
+* {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: var(--font-sans);
+  background-color: var(--cream);
+  color: var(--muted-brown);
+  -webkit-font-smoothing: antialiased;
+  overflow-x: hidden;
+}
+
+/* ─── Utility classes ─────────────────────────────────── */
+.font-serif    { font-family: var(--font-serif); }
+.font-cormorant{ font-family: var(--font-cormorant); }
+.font-script   { font-family: var(--font-script); }
+.font-sans     { font-family: var(--font-sans); }
+
+/* ─── Paper texture overlay ───────────────────────────── */
+.paper-texture {
+  position: relative;
+}
+.paper-texture::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='300' height='300' filter='url(%23noise)' opacity='0.03'/%3E%3C/svg%3E");
+  opacity: 0.4;
+  pointer-events: none;
+  z-index: 0;
+  border-radius: inherit;
+}
+
+/* ─── Polaroid card ───────────────────────────────────── */
+.polaroid {
+  background: #fffdf8;
+  padding: 10px 10px 36px;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.12), 0 1px 4px rgba(0, 0, 0, 0.08);
+  border-radius: 2px;
+  cursor: pointer;
+  transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1),
+    box-shadow 0.3s ease;
+}
+.polaroid:hover {
+  box-shadow: 0 12px 40px rgba(168, 95, 120, 0.2), 0 4px 16px rgba(0, 0, 0, 0.1);
+  z-index: 10;
+}
+.polaroid-caption {
+  font-family: var(--font-script);
+  font-size: 0.9rem;
+  color: var(--muted-brown);
+  text-align: center;
+  margin-top: 8px;
+  line-height: 1.4;
+}
+
+/* ─── Washi tape ──────────────────────────────────────── */
+.washi-tape {
+  position: absolute;
+  height: 22px;
+  border-radius: 2px;
+  opacity: 0.8;
+}
+.washi-pink {
+  background: repeating-linear-gradient(
+    90deg,
+    #f7dde5 0px,
+    #f7dde5 12px,
+    #e9b7c6 12px,
+    #e9b7c6 24px
+  );
+}
+.washi-cream {
+  background: repeating-linear-gradient(
+    90deg,
+    #fff8f0 0px,
+    #fff8f0 12px,
+    #f5d5c8 12px,
+    #f5d5c8 24px
+  );
+}
+
+/* ─── Torn paper edge ─────────────────────────────────── */
+.torn-top {
+  position: relative;
+}
+.torn-top::before {
+  content: "";
+  display: block;
+  height: 32px;
+  background: var(--cream);
+  -webkit-mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1200 32' preserveAspectRatio='none'%3E%3Cpath d='M0,0 Q50,32 100,16 Q150,0 200,20 Q250,32 300,10 Q350,0 400,24 Q450,32 500,8 Q550,0 600,28 Q650,32 700,12 Q750,0 800,22 Q850,32 900,6 Q950,0 1000,26 Q1050,32 1100,14 Q1150,0 1200,20 L1200,0 Z' fill='black'/%3E%3C/svg%3E");
+  mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1200 32' preserveAspectRatio='none'%3E%3Cpath d='M0,0 Q50,32 100,16 Q150,0 200,20 Q250,32 300,10 Q350,0 400,24 Q450,32 500,8 Q550,0 600,28 Q650,32 700,12 Q750,0 800,22 Q850,32 900,6 Q950,0 1000,26 Q1050,32 1100,14 Q1150,0 1200,20 L1200,0 Z' fill='black'/%3E%3C/svg%3E");
+  -webkit-mask-size: 100% 100%;
+  mask-size: 100% 100%;
+}
+.torn-bottom {
+  position: relative;
+}
+.torn-bottom::after {
+  content: "";
+  display: block;
+  height: 32px;
+  background: var(--cream);
+  -webkit-mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1200 32' preserveAspectRatio='none'%3E%3Cpath d='M0,32 Q50,0 100,16 Q150,32 200,12 Q250,0 300,22 Q350,32 400,8 Q450,0 500,24 Q550,32 600,4 Q650,0 700,20 Q750,32 800,10 Q850,0 900,26 Q950,32 1000,6 Q1050,0 1100,18 Q1150,32 1200,12 L1200,32 Z' fill='black'/%3E%3C/svg%3E");
+  mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1200 32' preserveAspectRatio='none'%3E%3Cpath d='M0,32 Q50,0 100,16 Q150,32 200,12 Q250,0 300,22 Q350,32 400,8 Q450,0 500,24 Q550,32 600,4 Q650,0 700,20 Q750,32 800,10 Q850,0 900,26 Q950,32 1000,6 Q1050,0 1100,18 Q1150,32 1200,12 L1200,32 Z' fill='black'/%3E%3C/svg%3E");
+  -webkit-mask-size: 100% 100%;
+  mask-size: 100% 100%;
+}
+
+/* ─── Flip card ───────────────────────────────────────── */
+.flip-card-inner {
+  transform-style: preserve-3d;
+  transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+}
+.flip-card-inner.flipped {
+  transform: rotateY(180deg);
+}
+.flip-card-front,
+.flip-card-back {
+  -webkit-backface-visibility: hidden;
+  backface-visibility: hidden;
+}
+.flip-card-back {
+  transform: rotateY(180deg);
+}
+
+/* ─── Custom scrollbar ────────────────────────────────── */
+::-webkit-scrollbar { width: 6px; }
+::-webkit-scrollbar-track { background: var(--cream); }
+::-webkit-scrollbar-thumb { background: var(--dusty-rose); border-radius: 3px; }
+
+/* ─── Selection color ─────────────────────────────────── */
+::selection { background: #f7dde5; color: #a85f78; }
+
+/* ─── Glass card ──────────────────────────────────────── */
+.glass-card {
+  background: rgba(255, 253, 248, 0.75);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(221, 160, 179, 0.2);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.06), inset 0 1px 0 rgba(255, 255, 255, 0.6);
+}
+
+/* ─── Scroll progress heart ───────────────────────────── */
+.progress-heart {
+  position: fixed;
+  right: 16px;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 50;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0;
+}
+
+/* ─── Floating decoration animations ─────────────────── */
+@keyframes floatA {
+  0%, 100% { transform: translateY(0) rotate(0deg); }
+  33%       { transform: translateY(-18px) rotate(6deg); }
+  66%       { transform: translateY(-8px) rotate(-4deg); }
+}
+@keyframes floatB {
+  0%, 100% { transform: translateY(0) rotate(0deg) scale(1); }
+  50%       { transform: translateY(-22px) rotate(-8deg) scale(1.05); }
+}
+@keyframes floatC {
+  0%, 100% { transform: translateY(0) translateX(0); }
+  25%       { transform: translateY(-10px) translateX(6px); }
+  75%       { transform: translateY(-16px) translateX(-4px); }
+}
+@keyframes petalDrift {
+  0%   { transform: translateY(-10vh) translateX(0) rotate(0deg); opacity: 0; }
+  10%  { opacity: 0.7; }
+  90%  { opacity: 0.4; }
+  100% { transform: translateY(110vh) translateX(80px) rotate(540deg); opacity: 0; }
+}
+@keyframes sparkleAnim {
+  0%, 100% { opacity: 0; transform: scale(0.4) rotate(0deg); }
+  50%       { opacity: 1; transform: scale(1) rotate(180deg); }
+}
+@keyframes shimmer {
+  0%   { background-position: -200% 0; }
+  100% { background-position: 200% 0; }
+}
+@keyframes heartbeat {
+  0%, 100% { transform: scale(1); }
+  25%       { transform: scale(1.1); }
+  50%       { transform: scale(1); }
+  75%       { transform: scale(1.05); }
+}
+@keyframes fadeSlideUp {
+  from { opacity: 0; transform: translateY(24px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+@keyframes sealWiggle {
+  0%, 100% { transform: rotate(0deg) scale(1); }
+  25%       { transform: rotate(-3deg) scale(1.03); }
+  75%       { transform: rotate(3deg) scale(1.03); }
+}
+
+.float-a { animation: floatA 5s ease-in-out infinite; }
+.float-b { animation: floatB 7s ease-in-out infinite; }
+.float-c { animation: floatC 6s ease-in-out infinite; }
+.sparkle-anim { animation: sparkleAnim 2.5s ease-in-out infinite; }
+.heartbeat { animation: heartbeat 1.8s ease-in-out infinite; }
+.seal-wiggle { animation: sealWiggle 3s ease-in-out infinite; }
+
+/* ─── Music player ────────────────────────────────────── */
+.music-bar {
+  width: 3px;
+  border-radius: 2px;
+  background: var(--deep-rose);
+  transform-origin: bottom;
+  animation: musicBar 0.8s ease-in-out infinite alternate;
+}
+@keyframes musicBar {
+  from { transform: scaleY(0.3); }
+  to   { transform: scaleY(1); }
+}
+
+/* ─── Envelope flap ───────────────────────────────────── */
+.envelope-flap {
+  transform-origin: top;
+  transition: transform 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+}
+.envelope-flap.open {
+  transform: rotateX(-180deg);
+}
+
+/* ─── Reduced motion ──────────────────────────────────── */
+@media (prefers-reduced-motion: reduce) {
+  *, ::before, ::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
