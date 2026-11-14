@@ -68,7 +68,7 @@ export default function HeroSection() {
 
         {/* Main heading */}
         <motion.h1
-          className="text-5xl sm:text-6xl md:text-7xl leading-tight"
+          className="text-4xl xs:text-5xl sm:text-6xl md:text-7xl leading-tight"
           style={{ fontFamily: "Playfair Display, serif", color: "#A85F78" }}
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}

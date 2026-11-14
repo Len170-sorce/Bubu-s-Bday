@@ -208,8 +208,7 @@ export default function GiftSection() {
               ))}
 
               <div
-                className="relative glass-card rounded-3xl p-8 sm:p-10 mx-auto"
-                style={{ maxWidth: 320 }}
+                className="relative glass-card rounded-3xl p-6 sm:p-10 mx-auto max-w-[340px] sm:max-w-md w-full"
               >
                 <motion.div
                   className="text-5xl mb-4"

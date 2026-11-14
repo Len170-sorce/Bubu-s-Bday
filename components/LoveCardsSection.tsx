@@ -20,7 +20,7 @@ function FlipCard({ reason }: { reason: (typeof birthdayContent.loveReasons)[0] 
       whileTap={{ scale: 0.97 }}
     >
       <motion.div
-        className="relative w-full h-40"
+        className="relative w-full h-44 sm:h-40"
         style={{ transformStyle: "preserve-3d" }}
         animate={{ rotateY: flipped ? 180 : 0 }}
         transition={{ duration: 0.6, type: "spring", damping: 20, stiffness: 120 }}

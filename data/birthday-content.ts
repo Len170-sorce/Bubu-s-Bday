@@ -183,11 +183,11 @@ export const birthdayContent = {
   // ── Birthday Letter ────────────────────────────────────────
   letter: {
     salutation: "To My Very Special Person, Glad Marrie",
-    // ✏️  Replace the paragraphs below with your own words
     paragraphs: [
-      "[ Write your own opening paragraph here. Tell her what this day means to you. ]",
-      "[ Write your second paragraph here. Share a memory, a feeling, or something you admire about her. ]",
-      "[ Write your closing paragraph here. End with something heartfelt and personal. ]",
+      "Happy Birthday, my love, Glad Marrie! ❤️ I hope you know how special you are to me and how grateful I am to have you in my life. You are one of the best things that has ever happened to me, and every moment I get to spend with you is something I will always treasure.",
+      "I may not always find the perfect words to express how much I love you, but I hope my actions make you feel just how important you are to me. Thank you for being you, for making my days brighter, for giving me reasons to smile, and for making even the simplest moments feel special.",
+      "On your birthday, I wish you endless happiness, good health, success, and everything your heart desires. I hope you never forget how beautiful, precious, and loved you are.",
+      "No matter what life brings, I want to keep making memories with you, supporting you, laughing with you, and loving you through every chapter of our story. You deserve all the beautiful things this world has to offer. Happy birthday again, my favorite person. I love you so much! ❤️",
     ],
     closing: "With all my love,",
     signature: "Your Love 💗",
