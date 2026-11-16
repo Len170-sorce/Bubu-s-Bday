@@ -10,6 +10,7 @@ interface HeartParticle {
   x: number;
   y: number;
   emoji: string;
+  rotation: number;
 }
 
 export default function DuduBear() {
@@ -59,6 +60,7 @@ export default function DuduBear() {
       x: (Math.random() - 0.5) * 36,
       y: -10 - Math.random() * 20,
       emoji: burstEmojis[Math.floor(Math.random() * burstEmojis.length)],
+      rotation: (Math.random() - 0.5) * 36,
     }));
     setParticles((prev) => [...prev.slice(-6), ...newParticles]);
   };
@@ -145,7 +147,7 @@ export default function DuduBear() {
               opacity: 0,
               y: p.y - 45,
               scale: [0.5, 1.2, 0.9],
-              rotate: (Math.random() - 0.5) * 36,
+              rotate: p.rotation,
             }}
             exit={{ opacity: 0 }}
             transition={{ duration: 1.3, ease: "easeOut" }}

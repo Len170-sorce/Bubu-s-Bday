@@ -40,14 +40,21 @@ Edit this file to change:
 ## 📸 Adding Photos
 
 1. Place your photos in `public/photos/`
-2. Update `gallery` array in `data/birthday-content.ts` with the correct filenames
-3. In `components/GallerySection.tsx`, uncomment the `<Image />` component and remove the placeholder `<div>`
-4. Repeat for the final page photo in `components/FinalSection.tsx`
+2. Update the `gallery` array in `data/birthday-content.ts` with each filename, caption, and date
+3. Set `hero.photoSrc` and `finalPage.photoSrc` in `data/birthday-content.ts` to the desired photo paths
 
 ## 🎵 Adding Music
 
 1. Place your `.mp3` file in `public/music/`
 2. Update `music.src` in `data/birthday-content.ts`
+
+## ✅ Checks before deployment
+
+```bash
+npm run lint
+npm run build
+npm audit
+```
 
 ## 🚀 Deployment to Vercel
 
@@ -60,6 +67,8 @@ Edit this file to change:
 5. Leave all settings as default — Vercel auto-detects Next.js
 6. Click **Deploy**
 7. Share the generated URL with Glad Marrie 💗
+
+The project requires Node.js 20.9 or later. Vercel's current Node.js runtime meets this requirement.
 
 ### Method 2: Vercel CLI
 

@@ -1,7 +1,5 @@
 "use client";
 
-import { useEffect, useState } from "react";
-
 const DECORATIONS = [
   { icon: "🌸", size: "text-xl", floatClass: "float-a", left: 8, top: 18 },
   { icon: "🌷", size: "text-lg", floatClass: "float-b", left: 88, top: 22 },
@@ -18,14 +16,6 @@ const DECORATIONS = [
 ];
 
 export default function FloatingDecorations() {
-  const [mounted, setMounted] = useState(false);
-
-  useEffect(() => {
-    setMounted(true);
-  }, []);
-
-  if (!mounted) return null;
-
   return (
     <div
       className="fixed inset-0 pointer-events-none z-0 overflow-hidden"

@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useEffect, useRef, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { birthdayContent } from "@/data/birthday-content";
 
@@ -11,28 +11,26 @@ interface Particle {
   rotation: number;
   scale: number;
   shape: string;
+  duration: number;
+  delay: number;
 }
 
-function Confetti({ active }: { active: boolean }) {
-  const [particles, setParticles] = useState<Particle[]>([]);
-  const shapes = ["🌸", "💗", "✨", "🌷", "⭐", "💮"];
+const CONFETTI_SHAPES = ["🌸", "💗", "✨", "🌷", "⭐", "💮"];
 
-  useEffect(() => {
-    if (!active) return;
-    setParticles(
-      Array.from({ length: 36 }, (_, i) => ({
-        id: i,
-        x: 10 + Math.random() * 80,
-        drift: (Math.random() - 0.5) * 160,
-        rotation: Math.random() * 360,
-        scale: 0.7 + Math.random() * 0.7,
-        shape: shapes[Math.floor(Math.random() * shapes.length)],
-      }))
-    );
-    const timer = setTimeout(() => setParticles([]), 4200);
-    return () => clearTimeout(timer);
-  }, [active]);
+function createConfettiParticles(): Particle[] {
+  return Array.from({ length: 36 }, (_, i) => ({
+    id: i,
+    x: 10 + Math.random() * 80,
+    drift: (Math.random() - 0.5) * 160,
+    rotation: Math.random() * 360,
+    scale: 0.7 + Math.random() * 0.7,
+    shape: CONFETTI_SHAPES[Math.floor(Math.random() * CONFETTI_SHAPES.length)],
+    duration: 3 + Math.random() * 1.2,
+    delay: Math.random() * 0.35,
+  }));
+}
 
+function Confetti({ particles }: { particles: Particle[] }) {
   return (
     <div className="fixed inset-0 pointer-events-none z-40 overflow-hidden" aria-hidden="true">
       {particles.map((p) => (
@@ -48,8 +46,8 @@ function Confetti({ active }: { active: boolean }) {
             rotate: p.rotation + 480,
           }}
           transition={{
-            duration: 3 + Math.random() * 1.2,
-            delay: Math.random() * 0.35,
+            duration: p.duration,
+            delay: p.delay,
             ease: [0.16, 1, 0.3, 1],
           }}
         >
@@ -62,11 +60,30 @@ function Confetti({ active }: { active: boolean }) {
 
 export default function GiftSection() {
   const [opened, setOpened] = useState(false);
-  const [showConfetti, setShowConfetti] = useState(false);
+  const [particles, setParticles] = useState<Particle[]>([]);
+  const confettiTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const revealTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+
+  useEffect(
+    () => () => {
+      if (confettiTimerRef.current) clearTimeout(confettiTimerRef.current);
+      if (revealTimerRef.current) clearTimeout(revealTimerRef.current);
+    },
+    []
+  );
 
   const handleOpen = () => {
-    setShowConfetti(true);
-    setTimeout(() => setOpened(true), 350);
+    setParticles(createConfettiParticles());
+    if (confettiTimerRef.current) clearTimeout(confettiTimerRef.current);
+    if (revealTimerRef.current) clearTimeout(revealTimerRef.current);
+    confettiTimerRef.current = setTimeout(() => {
+      setParticles([]);
+      confettiTimerRef.current = null;
+    }, 4550);
+    revealTimerRef.current = setTimeout(() => {
+      setOpened(true);
+      revealTimerRef.current = null;
+    }, 350);
   };
 
   return (
@@ -77,7 +94,7 @@ export default function GiftSection() {
     >
       <div className="torn-top w-full" />
 
-      <Confetti active={showConfetti} />
+      <Confetti particles={particles} />
 
       <div className="absolute inset-0 pointer-events-none" aria-hidden="true">
         <div

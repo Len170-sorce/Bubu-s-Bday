@@ -69,7 +69,7 @@ export default function FinalSection({ onReplay }: FinalSectionProps) {
             style={{ aspectRatio: "4/5", minHeight: 160 }}
           >
             <Image
-              src="/photos/8.jpg"
+              src={birthdayContent.finalPage.photoSrc}
               alt={birthdayContent.finalPage.photoCaption}
               fill
               sizes="(max-width: 640px) 85vw, 300px"

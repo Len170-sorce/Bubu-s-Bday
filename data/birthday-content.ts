@@ -207,7 +207,7 @@ export const birthdayContent = {
       "And just like that, another page has been added to our story. Here's to more beautiful moments, more laughter, and more memories together.",
     handwrittenNote: "With love, always 🌸",
     replayLabel: "Read Again From the Beginning",
-    photoSrc: "/photos/placeholder-final.jpg",
+    photoSrc: "/photos/8.jpg",
     photoCaption: "Us, always.",
   },
 

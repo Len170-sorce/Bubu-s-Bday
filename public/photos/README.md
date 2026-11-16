@@ -1,23 +1,10 @@
-# How to Add Your Photos
+# Adding Photos
 
-Place your photos inside the `public/photos/` folder.
+Place image files in this folder, then update the matching paths in
+`data/birthday-content.ts`:
 
-Then open `data/birthday-content.ts` and update the `gallery` array with the correct filenames:
+- `hero.photoSrc` controls the cover photo.
+- `gallery[].src` controls each gallery card and its enlarged preview.
+- `finalPage.photoSrc` controls the closing-page photo.
 
-```ts
-{ id: 1, src: "/photos/your-photo.jpg", caption: "Your caption here", date: "2024", rotation: -3 },
-```
-
-## Supported formats
-- `.jpg` / `.jpeg`
-- `.png`
-- `.webp`
-
-## How to enable images in GallerySection
-
-In `components/GallerySection.tsx`, inside the `PhotoPlaceholder` component:
-
-1. Remove the placeholder `<div>` block.
-2. Uncomment the `<Image ... />` block below it.
-
-That's it! The same applies to `FinalSection.tsx` for the closing photo.
+Use paths beginning with `/photos/`, such as `/photos/8.jpg`.

@@ -6,10 +6,8 @@ import { birthdayContent } from "@/data/birthday-content";
 
 function MobileTimelineEntry({
   entry,
-  index,
 }: {
   entry: (typeof birthdayContent.timeline)[0];
-  index: number;
 }) {
   const ref = useRef<HTMLDivElement>(null);
   const inView = useInView(ref, { once: true, margin: "-60px" });
@@ -179,8 +177,8 @@ export default function TimelineSection() {
         />
 
         <div className="sm:hidden">
-          {birthdayContent.timeline.map((entry, i) => (
-            <MobileTimelineEntry key={entry.id} entry={entry} index={i} />
+          {birthdayContent.timeline.map((entry) => (
+            <MobileTimelineEntry key={entry.id} entry={entry} />
           ))}
         </div>
 

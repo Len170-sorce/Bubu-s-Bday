@@ -187,18 +187,16 @@ export default function GallerySection() {
               </button>
 
               <div
-                className="w-full bg-[#F7DDE5] relative flex items-center justify-center rounded-sm overflow-hidden"
+                className="w-full bg-[#F7DDE5] relative rounded-sm overflow-hidden"
                 style={{ aspectRatio: "4/5", minHeight: 260 }}
               >
-                <div className="text-center p-6">
-                  <div className="text-6xl mb-3">📷</div>
-                  <p
-                    className="font-script text-sm text-[#A85F78]"
-                    style={{ fontFamily: "Caveat, cursive" }}
-                  >
-                    Photo {selected.id}
-                  </p>
-                </div>
+                <Image
+                  src={selected.src}
+                  alt={selected.caption}
+                  fill
+                  sizes="(max-width: 640px) 90vw, 360px"
+                  className="object-cover"
+                />
               </div>
 
               <div className="polaroid-caption mt-3">

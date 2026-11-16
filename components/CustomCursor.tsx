@@ -5,7 +5,6 @@ import { motion, useMotionValue, useSpring } from "framer-motion";
 
 export default function CustomCursor() {
   const [visible, setVisible] = useState(false);
-  const [isFinePointer, setIsFinePointer] = useState(false);
 
   const mouseX = useMotionValue(-100);
   const mouseY = useMotionValue(-100);
@@ -16,7 +15,6 @@ export default function CustomCursor() {
   useEffect(() => {
     const media = window.matchMedia("(pointer: fine)");
     if (!media.matches) return;
-    setIsFinePointer(true);
 
     const onMove = (e: MouseEvent) => {
       mouseX.set(e.clientX - 10);
@@ -37,8 +35,6 @@ export default function CustomCursor() {
       document.removeEventListener("mouseenter", onEnter);
     };
   }, [mouseX, mouseY, visible]);
-
-  if (!isFinePointer) return null;
 
   return (
     <motion.div
