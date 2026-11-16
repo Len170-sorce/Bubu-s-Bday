@@ -210,10 +210,8 @@ export const birthdayContent = {
     photoCaption: "Us, always.",
   },
 
-  // ── Music ──────────────────────────────────────────────────
   music: {
-    // Replace with your own audio file inside /public/music/
-    src: "/music/birthday-song.mp3",
+    src: "/music/bubu-song.mp3",
     title: "Our Song",
     artist: "♪",
   },

@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useRef, useEffect } from "react";
-import { motion, AnimatePresence } from "framer-motion";
+import { motion } from "framer-motion";
 import { Play, Pause } from "lucide-react";
 
 interface MusicPlayerProps {
@@ -14,10 +14,26 @@ export default function MusicPlayer({ src, title }: MusicPlayerProps) {
   const audioRef = useRef<HTMLAudioElement | null>(null);
 
   useEffect(() => {
-    audioRef.current = new Audio(src);
-    audioRef.current.loop = true;
+    const audio = new Audio(src);
+    audio.loop = true;
+    audio.preload = "auto";
+
+    const onPlay = () => setPlaying(true);
+    const onPause = () => setPlaying(false);
+    const onEnded = () => setPlaying(false);
+
+    audio.addEventListener("play", onPlay);
+    audio.addEventListener("pause", onPause);
+    audio.addEventListener("ended", onEnded);
+
+    audioRef.current = audio;
+
     return () => {
-      audioRef.current?.pause();
+      audio.removeEventListener("play", onPlay);
+      audio.removeEventListener("pause", onPause);
+      audio.removeEventListener("ended", onEnded);
+      audio.pause();
+      audioRef.current = null;
     };
   }, [src]);
 
@@ -26,9 +42,10 @@ export default function MusicPlayer({ src, title }: MusicPlayerProps) {
     if (playing) {
       audioRef.current.pause();
     } else {
-      audioRef.current.play().catch(() => {});
+      audioRef.current.play().catch((err) => {
+        console.warn("Audio playback blocked or failed:", err);
+      });
     }
-    setPlaying(!playing);
   };
 
   return (
@@ -39,25 +56,33 @@ export default function MusicPlayer({ src, title }: MusicPlayerProps) {
       transition={{ delay: 1, duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
     >
       <div
-        className="flex items-center gap-2 px-3 py-2 rounded-full border border-[#E9B7C6] shadow-sm"
+        onClick={togglePlay}
+        role="button"
+        tabIndex={0}
+        onKeyDown={(e) => {
+          if (e.key === "Enter" || e.key === " ") {
+            e.preventDefault();
+            togglePlay();
+          }
+        }}
+        className="flex items-center gap-2.5 px-3 py-2 rounded-full border border-[#E9B7C6] shadow-sm cursor-pointer transition-all hover:scale-[1.04] active:scale-[0.97] hover:shadow-md"
         style={{
-          background: "rgba(255,253,248,0.92)",
-          boxShadow: "0 4px 20px rgba(168,95,120,0.12)",
+          background: "rgba(255,253,248,0.95)",
+          boxShadow: "0 4px 20px rgba(168,95,120,0.14)",
           backdropFilter: "blur(10px)",
         }}
+        aria-label={playing ? `Pause ${title}` : `Play ${title}`}
       >
-        <button
-          onClick={togglePlay}
-          className="w-7 h-7 rounded-full flex items-center justify-center transition-transform hover:scale-105 active:scale-95 focus:outline-none"
+        <div
+          className="w-7 h-7 rounded-full flex items-center justify-center transition-transform"
           style={{ background: "#A85F78" }}
-          aria-label={playing ? "Pause music" : "Play music"}
         >
           {playing ? (
             <Pause size={12} color="#FFFDF8" />
           ) : (
             <Play size={12} color="#FFFDF8" className="translate-x-[1px]" />
           )}
-        </button>
+        </div>
 
         <div className="flex items-center gap-1.5 overflow-hidden pr-1">
           {playing && (
@@ -77,7 +102,7 @@ export default function MusicPlayer({ src, title }: MusicPlayerProps) {
             </div>
           )}
           <span
-            className="text-xs text-[#A85F78] whitespace-nowrap"
+            className="text-xs text-[#A85F78] whitespace-nowrap font-medium"
             style={{ fontFamily: "Caveat, cursive" }}
           >
             {title}
