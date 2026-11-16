@@ -1,6 +1,7 @@
 "use client";
 
 import { useRef } from "react";
+import Image from "next/image";
 import { motion, useScroll, useTransform } from "framer-motion";
 import { birthdayContent } from "@/data/birthday-content";
 
@@ -101,31 +102,35 @@ export default function HeroSection() {
         </motion.p>
 
         <motion.div
-          className="polaroid mt-4"
-          style={{ transform: "rotate(-2deg)", maxWidth: 220 }}
+          className="polaroid mt-4 w-[250px] sm:w-[290px] md:w-[320px] max-w-[90vw]"
+          style={{ transform: "rotate(-2deg)" }}
           initial={{ opacity: 0, y: 24, rotate: -6 }}
           animate={{ opacity: 1, y: 0, rotate: -2 }}
           transition={{ delay: 0.8, duration: 0.75, ease: [0.22, 1, 0.36, 1] }}
-          whileHover={{ scale: 1.05, rotate: 0 }}
+          whileHover={{ scale: 1.04, rotate: 0 }}
         >
           <div
-            className="absolute -top-3 left-1/2 -translate-x-1/2 w-16 h-5 rounded-sm opacity-80"
+            className="absolute -top-3.5 left-1/2 -translate-x-1/2 w-20 sm:w-24 h-5 sm:h-6 rounded-sm opacity-80 z-10 pointer-events-none"
             style={{
               background: "repeating-linear-gradient(90deg, #F7DDE5 0px, #F7DDE5 10px, #E9B7C6 10px, #E9B7C6 20px)",
             }}
           />
           <div
-            className="w-full bg-[#F7DDE5] flex items-center justify-center rounded-sm overflow-hidden"
-            style={{ aspectRatio: "4/5", minHeight: 160 }}
+            className="w-full bg-[#F7DDE5] relative flex items-center justify-center rounded-sm overflow-hidden"
+            style={{ aspectRatio: "4/5", minHeight: 240 }}
           >
-            <div className="text-center p-4">
-              <div className="text-4xl mb-2">📷</div>
-              <p className="font-script text-sm text-[#A85F78]" style={{ fontFamily: "Caveat, cursive" }}>
-                Your photo here
-              </p>
-            </div>
+            <Image
+              src={birthdayContent.hero.photoSrc || "/photos/1.jpg"}
+              alt={birthdayContent.recipientName}
+              fill
+              sizes="(max-width: 640px) 250px, 320px"
+              className="object-cover transition-transform duration-500 hover:scale-105"
+              priority
+            />
           </div>
-          <p className="polaroid-caption">My favorite person 💗</p>
+          <p className="polaroid-caption text-base sm:text-lg mt-2.5">
+            {birthdayContent.hero.photoCaption || "My favorite person 💗"}
+          </p>
         </motion.div>
 
         <motion.p

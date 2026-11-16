@@ -50,17 +50,15 @@ function PhotoCard({ photo, onClick }: { photo: Photo; onClick: () => void }) {
 
       <div
         className="w-full bg-[#F7DDE5] relative flex items-center justify-center overflow-hidden rounded-sm"
-        style={{ aspectRatio: "4/5", minHeight: 160, maxHeight: 240 }}
+        style={{ aspectRatio: "4/5", minHeight: 180 }}
       >
-        <div className="absolute inset-0 flex flex-col items-center justify-center gap-2 p-3">
-          <div className="text-4xl sm:text-5xl">📷</div>
-          <p
-            className="font-script text-xs sm:text-sm text-[#A85F78] text-center leading-tight"
-            style={{ fontFamily: "Caveat, cursive" }}
-          >
-            Photo {photo.id}
-          </p>
-        </div>
+        <Image
+          src={photo.src}
+          alt={photo.caption}
+          fill
+          sizes="(max-width: 640px) 45vw, (max-width: 1024px) 30vw, 280px"
+          className="object-cover transition-transform duration-500 hover:scale-105"
+        />
       </div>
 
       <div className="polaroid-caption px-1">

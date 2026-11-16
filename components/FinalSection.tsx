@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import { motion } from "framer-motion";
 import { birthdayContent } from "@/data/birthday-content";
 
@@ -49,8 +50,8 @@ export default function FinalSection({ onReplay }: FinalSectionProps) {
         </motion.div>
 
         <motion.div
-          className="polaroid"
-          style={{ transform: "rotate(1.5deg)", maxWidth: 220 }}
+          className="polaroid w-[260px] sm:w-[300px] max-w-[85vw]"
+          style={{ transform: "rotate(1.5deg)" }}
           initial={{ opacity: 0, y: 24, rotate: 4 }}
           whileInView={{ opacity: 1, y: 0, rotate: 1.5 }}
           viewport={{ once: true }}
@@ -64,18 +65,16 @@ export default function FinalSection({ onReplay }: FinalSectionProps) {
             }}
           />
           <div
-            className="w-full bg-[#F7DDE5] flex items-center justify-center rounded-sm"
+            className="relative w-full bg-[#F7DDE5] rounded-sm overflow-hidden"
             style={{ aspectRatio: "4/5", minHeight: 160 }}
           >
-            <div className="text-center p-4">
-              <div className="text-4xl mb-2">📷</div>
-              <p
-                className="font-script text-xs sm:text-sm text-[#A85F78]"
-                style={{ fontFamily: "Caveat, cursive" }}
-              >
-                Your photo here
-              </p>
-            </div>
+            <Image
+              src="/photos/8.jpg"
+              alt={birthdayContent.finalPage.photoCaption}
+              fill
+              sizes="(max-width: 640px) 85vw, 300px"
+              className="object-cover"
+            />
           </div>
           <p className="polaroid-caption">{birthdayContent.finalPage.photoCaption}</p>
         </motion.div>
